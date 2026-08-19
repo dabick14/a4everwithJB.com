@@ -1,0 +1,352 @@
+/* ---------------------------------------------------
+   Jeremy & Afriyie — Save the Date
+   Editorial reset: restraint, negative space, one hero element
+--------------------------------------------------- */
+
+:root {
+  --color-text: #F7F1E4;
+  --color-text-muted: #D9C7A8;
+  --color-gold: #E0BE55;
+  --color-gold-dim: #C7A23F;
+
+  --font-display: 'Cormorant Garamond', 'Iowan Old Style', 'Palatino Linotype', serif;
+  --font-body: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #120C06;
+  color: var(--color-text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+h1, p {
+  margin: 0;
+}
+
+a {
+  color: var(--color-gold);
+  text-decoration-color: var(--color-gold-dim);
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  color: var(--color-text);
+}
+
+.amp {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--color-gold);
+}
+
+/* ---------------- background photo + scrim ---------------- */
+
+.bg-photo {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background-image: url("/assets/images/autumn-bg-mobile.jpg"), linear-gradient(160deg, #2E1B0E 0%, #1A1108 60%, #120C06 100%);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(10, 7, 4, 0.64) 0%,
+      rgba(10, 7, 4, 0.58) 50%,
+      rgba(10, 7, 4, 0.68) 100%
+    ),
+    linear-gradient(150deg, rgba(70, 28, 12, 0.16) 0%, transparent 55%);
+}
+
+@media (min-width: 768px) {
+  .bg-photo {
+    background-image: url("/assets/images/autumn-bg.jpg"), linear-gradient(160deg, #2E1B0E 0%, #1A1108 60%, #120C06 100%);
+  }
+}
+
+/* ---------------- layout: mobile-first (natural scroll) ---------------- */
+
+.screen {
+  position: relative;
+  z-index: 1;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.composition {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: clamp(4rem, 16vw, 6rem) 1.5rem;
+  gap: clamp(1.5rem, 6vw, 2.5rem);
+}
+
+/* ---------------- domain label ---------------- */
+
+.domain-label {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: clamp(0.75rem, 3vw, 0.95rem);
+  letter-spacing: 0.16em;
+  color: var(--color-text-muted);
+}
+
+/* ---------------- headline: the date, one line ---------------- */
+
+.headline {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(1.9rem, 9vw, 3.4rem);
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  line-height: 1.1;
+  color: var(--color-text);
+}
+
+/* ---------------- hashtags: quiet accent ---------------- */
+
+.hashtags {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: clamp(0.8rem, 3.2vw, 1rem);
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+}
+
+.sep {
+  color: var(--color-gold-dim);
+  margin: 0 0.5em;
+}
+
+/* ---------------- names ---------------- */
+
+.names {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-variant: small-caps;
+  font-size: clamp(1.6rem, 6vw, 2.4rem);
+  letter-spacing: 0.04em;
+  color: var(--color-text);
+}
+
+/* ---------------- tagline ---------------- */
+
+.tagline {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.05rem, 3.8vw, 1.3rem);
+  color: var(--color-text-muted);
+}
+
+/* ---------------- venue ---------------- */
+
+.venue {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: clamp(0.95rem, 3.2vw, 1.15rem);
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+}
+
+/* ---------------- divider ---------------- */
+
+.divider {
+  width: 56px;
+  height: 1px;
+  background: var(--color-gold-dim);
+  opacity: 0.6;
+}
+
+/* ---------------- countdown: supporting element ---------------- */
+
+.countdown-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(1.25rem, 6vw, 3rem);
+}
+
+.countdown-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.countdown-number {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: clamp(1.35rem, 5.5vw, 1.9rem);
+  line-height: 1;
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+  display: inline-block;
+}
+
+.countdown-number.tick {
+  animation: digitPop 0.4s var(--ease-bounce);
+}
+
+@keyframes digitPop {
+  0% { transform: scale(1); }
+  45% { transform: scale(1.18); color: var(--color-gold); }
+  100% { transform: scale(1); }
+}
+
+.countdown-label {
+  margin-top: 0.45rem;
+  font-weight: 500;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+}
+
+.countdown-arrived {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--color-gold);
+}
+
+/* ---------------- footer ---------------- */
+
+.site-footer {
+  flex: 0 0 auto;
+  padding: 1.25rem 1.5rem;
+  text-align: center;
+}
+
+.site-footer p {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 0.7rem;
+  letter-spacing: 0.03em;
+  color: var(--color-text-muted);
+}
+
+.site-footer a {
+  font-weight: 500;
+}
+
+/* ---------------- reveal / motion (stagger on load) ---------------- */
+
+.reveal {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html.js .reveal {
+    opacity: 0;
+    transform: translateY(18px) scale(0.98);
+    transition: opacity 0.8s var(--ease-bounce), transform 0.8s var(--ease-bounce);
+  }
+
+  html.js .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  html.js .composition > .reveal:nth-child(1) { transition-delay: 0.05s; }
+  html.js .composition > .reveal:nth-child(2) { transition-delay: 0.16s; }
+  html.js .composition > .reveal:nth-child(3) { transition-delay: 0.27s; }
+  html.js .composition > .reveal:nth-child(4) { transition-delay: 0.38s; }
+  html.js .composition > .reveal:nth-child(5) { transition-delay: 0.49s; }
+  html.js .composition > .reveal:nth-child(6) { transition-delay: 0.6s; }
+  html.js .composition > .reveal:nth-child(7) { transition-delay: 0.71s; }
+  html.js .composition > .reveal:nth-child(8) { transition-delay: 0.8s; }
+}
+
+/* ---------------- desktop: single screen, no scroll ---------------- */
+
+@media (min-width: 768px) {
+  html, body {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .screen {
+    height: 100dvh;
+  }
+
+  .composition {
+    padding: 0 2rem;
+    gap: clamp(1rem, 4vh, 2.75rem);
+    min-height: 0;
+  }
+
+  .domain-label {
+    font-size: clamp(0.68rem, 1.6vh, 0.9rem);
+  }
+
+  .headline {
+    font-size: clamp(2rem, min(5.2vw, 13vh), 5.5rem);
+    white-space: nowrap;
+  }
+
+  .hashtags {
+    font-size: clamp(0.75rem, 1.7vh, 0.95rem);
+  }
+
+  .names {
+    font-size: clamp(1.3rem, 4vh, 2.2rem);
+  }
+
+  .tagline {
+    font-size: clamp(0.95rem, 2.2vh, 1.2rem);
+  }
+
+  .venue {
+    font-size: clamp(0.88rem, 1.9vh, 1.1rem);
+  }
+
+  .countdown-grid {
+    gap: clamp(1.5rem, 5vh, 3.5rem);
+  }
+
+  .countdown-number {
+    font-size: clamp(1.4rem, 5vh, 2.75rem);
+  }
+
+  .countdown-label {
+    font-size: clamp(0.68rem, 1.15vh, 0.82rem);
+  }
+
+  .site-footer {
+    padding: clamp(0.5rem, 1.5vh, 1rem) 1.5rem;
+  }
+
+  .site-footer p {
+    font-size: 0.68rem;
+  }
+}
+
+/* ---------------- responsive ---------------- */
+
+@media (max-width: 480px) {
+  .countdown-grid {
+    gap: 1rem;
+  }
+}
