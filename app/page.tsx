@@ -1,49 +1,11 @@
-import Image from "next/image";
 import Countdown from "@/components/Countdown";
 import GuestForm from "@/components/GuestForm";
 import RevealRoot from "@/components/RevealRoot";
-import { EnvelopeIntro } from "@/components/EnvelopeIntro";
 import styles from "@/components/GuestForm.module.css";
 
 export default function Home() {
   return (
     <RevealRoot>
-      {/*
-        Demo usage of the reusable <EnvelopeIntro> component (see
-        components/EnvelopeIntro/README.md for the full prop reference).
-        Colours below are pulled straight from this site's palette
-        (app/globals.css :root) so the intro and the page underneath
-        feel like one piece.
-      */}
-      <EnvelopeIntro
-        names={["Jeremy", "Afriyie"]}
-        tagline="are getting married"
-        couplePalette={{
-          envelope: "#4A2E17",
-          envelopeShadow: "#20110A",
-          card: "#F7F1E4",
-          ink: "#3A2414",
-          accent: "#E0BE55",
-          ribbon: "#C6A253",
-          wax: "#C6A253",
-        }}
-        envelopeTexture="/images/envelope-texture.jpeg"
-        artwork={
-          // seal-gold.webp already has "J & A" embossed correctly into the
-          // wax, so no code-drawn monogram overlay is needed here. If a
-          // future asset regen changes the design, re-check the baked-in
-          // letters before reusing this as-is.
-          <Image
-            src="/images/seal-gold.webp"
-            alt="J & A wax seal"
-            fill
-            priority
-            sizes="(min-width: 768px) 150px, 29vw"
-            style={{ objectFit: "contain" }}
-          />
-        }
-      />
-
       <div className="bg-photo" aria-hidden="true" />
       <div className="scrim" aria-hidden="true" />
 
