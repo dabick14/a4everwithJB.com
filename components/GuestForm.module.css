@@ -113,6 +113,73 @@
   opacity: 0.5;
 }
 
+/* ---------------- phone: country code + number ---------------- */
+
+.phoneRow {
+  display: flex;
+  align-items: stretch;
+  gap: 0.85rem;
+}
+
+.countrySelectWrap {
+  position: relative;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: stretch;
+}
+
+.countrySelect {
+  appearance: none;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(217, 199, 168, 0.32);
+  border-radius: 0;
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 0.92rem;
+  padding: 0.45rem 1.1rem 0.45rem 0.05rem;
+  width: 122px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.25s ease;
+}
+
+.countrySelectWrap::after {
+  content: "";
+  position: absolute;
+  right: 0.15rem;
+  top: 0.75rem;
+  width: 6px;
+  height: 6px;
+  border-right: 1px solid var(--color-gold-dim);
+  border-bottom: 1px solid var(--color-gold-dim);
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+
+.countrySelect:focus {
+  outline: none;
+  border-bottom-color: var(--color-gold);
+}
+
+.countrySelect:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.countrySelect option {
+  background: #1a1108;
+  color: var(--color-text);
+}
+
+.phoneInput {
+  flex: 1;
+  min-width: 0;
+}
+
 /* ---------------- side toggle ---------------- */
 
 .sideLabel {

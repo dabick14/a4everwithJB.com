@@ -9,8 +9,43 @@ const WEDDING_ID = "38a6ce2b343e5d62cb528471e37687024246c1eea93a0e42";
 type Side = "jeremy" | "afriyie" | null;
 type Status = "idle" | "submitting" | "success" | "error";
 
+// Ghana pinned first (the couple's home country), then A–Z. Not
+// exhaustive — the common guest countries for this wedding, so the
+// list stays scannable rather than a full ISO dump.
+const COUNTRY_CODES = [
+  { code: "+233", name: "Ghana" },
+  { code: "+61", name: "Australia" },
+  { code: "+32", name: "Belgium" },
+  { code: "+55", name: "Brazil" },
+  { code: "+1", name: "Canada / US" },
+  { code: "+225", name: "Côte d'Ivoire" },
+  { code: "+45", name: "Denmark" },
+  { code: "+20", name: "Egypt" },
+  { code: "+251", name: "Ethiopia" },
+  { code: "+33", name: "France" },
+  { code: "+49", name: "Germany" },
+  { code: "+353", name: "Ireland" },
+  { code: "+39", name: "Italy" },
+  { code: "+254", name: "Kenya" },
+  { code: "+31", name: "Netherlands" },
+  { code: "+64", name: "New Zealand" },
+  { code: "+234", name: "Nigeria" },
+  { code: "+47", name: "Norway" },
+  { code: "+974", name: "Qatar" },
+  { code: "+966", name: "Saudi Arabia" },
+  { code: "+65", name: "Singapore" },
+  { code: "+27", name: "South Africa" },
+  { code: "+34", name: "Spain" },
+  { code: "+46", name: "Sweden" },
+  { code: "+41", name: "Switzerland" },
+  { code: "+228", name: "Togo" },
+  { code: "+971", name: "UAE" },
+  { code: "+44", name: "United Kingdom" },
+] as const;
+
 export default function GuestForm() {
   const [name, setName] = useState("");
+  const [countryCode, setCountryCode] = useState("+233");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [side, setSide] = useState<Side>(null);
@@ -23,6 +58,7 @@ export default function GuestForm() {
 
     const trimmedName = name.trim();
     const trimmedPhone = phone.trim();
+    const fullPhone = trimmedPhone ? `${countryCode} ${trimmedPhone}` : "";
     const trimmedEmail = email.trim();
 
     if (!trimmedName) {
@@ -47,7 +83,7 @@ export default function GuestForm() {
         body: JSON.stringify({
           weddingId: WEDDING_ID,
           name: trimmedName,
-          phone: trimmedPhone,
+          phone: fullPhone,
           email: trimmedEmail,
           side,
         }),
@@ -133,17 +169,35 @@ export default function GuestForm() {
           <label className={styles.label} htmlFor="guest-phone">
             Phone
           </label>
-          <input
-            id="guest-phone"
-            name="phone"
-            type="tel"
-            autoComplete="tel"
-            placeholder="+233 ..."
-            className={styles.input}
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            disabled={submitting}
-          />
+          <div className={styles.phoneRow}>
+            <div className={styles.countrySelectWrap}>
+              <select
+                id="guest-country-code"
+                aria-label="Country code"
+                className={styles.countrySelect}
+                value={countryCode}
+                onChange={(e) => setCountryCode(e.target.value)}
+                disabled={submitting}
+              >
+                {COUNTRY_CODES.map(({ code, name }) => (
+                  <option key={code + name} value={code}>
+                    {code} {name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <input
+              id="guest-phone"
+              name="phone"
+              type="tel"
+              autoComplete="tel-national"
+              placeholder="24 123 4567"
+              className={`${styles.input} ${styles.phoneInput}`}
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              disabled={submitting}
+            />
+          </div>
         </div>
 
         <div className={styles.field}>
