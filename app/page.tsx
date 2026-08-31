@@ -30,6 +30,13 @@ export default function Home() {
           <div className="divider reveal" aria-hidden="true" />
 
           <Countdown />
+
+          <a href="#rsvp" className="rsvp-cta reveal">
+            RSVP
+            <span className="rsvp-chevron" aria-hidden="true">
+              &darr;
+            </span>
+          </a>
         </main>
 
         <footer className="site-footer">
@@ -46,7 +53,7 @@ export default function Home() {
         </footer>
       </div>
 
-      <section className={`${styles.section} reveal`}>
+      <section id="rsvp" className={`${styles.section} reveal`}>
         <div className={styles.divider} aria-hidden="true" />
         <p className={styles.eyebrow}>Join the Celebration</p>
         <h2 className={styles.heading}>Save Your Spot</h2>
