@@ -7,6 +7,13 @@ const GUEST_ENDPOINT = "https://us-central1-cfweddingslive.cloudfunctions.net/gu
 const WEDDING_SLUG = "afriyie-jeremy";
 
 type Side = "jeremy" | "afriyie" | null;
+
+// API expects the capitalized enum values ("Jeremy" / "Afriyie");
+// internal state stays lowercase since it also drives the CSS class names.
+const SIDE_API_VALUE: Record<"jeremy" | "afriyie", string> = {
+  jeremy: "Jeremy",
+  afriyie: "Afriyie",
+};
 type Status = "idle" | "submitting" | "success" | "error";
 
 // Ghana pinned first (the couple's home country), then A–Z. Not
@@ -85,7 +92,7 @@ export default function GuestForm() {
           name: trimmedName,
           phone: fullPhone,
           email: trimmedEmail,
-          side,
+          side: SIDE_API_VALUE[side],
         }),
       });
 
