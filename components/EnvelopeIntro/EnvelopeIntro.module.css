@@ -1,0 +1,320 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(120% 90% at 50% 20%, rgba(120, 78, 36, 0.28) 0%, transparent 60%),
+    linear-gradient(160deg, #3b2415 0%, #241407 60%, #150c05 100%);
+  overflow: hidden;
+  touch-action: manipulation;
+
+  --envelope: var(--ei-envelope, #4a2e17);
+  --envelope-shadow: var(--ei-envelope-shadow, #20110a);
+  --card: var(--ei-card, #f7f1e4);
+  --ink: var(--ei-ink, #3a2414);
+  --accent: var(--ei-accent, #e0be55);
+  --ribbon: var(--ei-ribbon, #c6a253);
+  --envelope-texture: var(--ei-envelope-texture, none);
+}
+
+.skip {
+  position: absolute;
+  top: max(1.25rem, env(safe-area-inset-top));
+  right: max(1.25rem, env(safe-area-inset-right));
+  z-index: 20;
+  background: transparent;
+  border: 1px solid rgba(247, 241, 228, 0.28);
+  color: var(--color-text-muted, #d9c7a8);
+  font-family: var(--font-body, sans-serif);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.55rem 0.9rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease, opacity 0.4s ease;
+}
+
+.skip:hover,
+.skip:focus-visible {
+  color: var(--color-text, #f7f1e4);
+  border-color: var(--accent);
+}
+
+.stage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 2200px;
+  width: 100%;
+  height: 100%;
+}
+
+.envelope {
+  position: relative;
+  width: 100vw;
+  height: 100dvh;
+  transform-style: preserve-3d;
+}
+
+@media (min-width: 768px) {
+  .envelope {
+    width: min(92vw, 520px);
+    height: min(90vh, 900px);
+  }
+}
+
+.back {
+  position: absolute;
+  inset: 0;
+  border-radius: 0;
+  background-color: var(--envelope);
+  background-image: linear-gradient(160deg, rgba(20, 11, 5, 0.1) 0%, rgba(20, 11, 5, 0.5) 100%), var(--envelope-texture);
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: multiply, normal;
+  box-shadow: 0 0 0 1px rgba(198, 162, 83, 0.12);
+}
+
+@media (min-width: 768px) {
+  .back {
+    box-shadow: 0 40px 80px -24px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(198, 162, 83, 0.16);
+  }
+}
+
+.sideFlap {
+  position: absolute;
+  inset: 0;
+  background-color: var(--envelope);
+  /* Same tint as .back — the side folds should read as the same continuous
+     sheet, not a separately-lit panel, so avoid a visible seam at the crease. */
+  background-image: linear-gradient(160deg, rgba(20, 11, 5, 0.1) 0%, rgba(20, 11, 5, 0.5) 100%), var(--envelope-texture);
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: multiply, normal;
+}
+
+.sideFlapLeft {
+  clip-path: polygon(0 0, 0 100%, 46% 50%);
+}
+
+.sideFlapRight {
+  clip-path: polygon(100% 0, 100% 100%, 54% 50%);
+}
+
+.card {
+  position: absolute;
+  left: 14%;
+  top: 26%;
+  width: 72%;
+  height: 66%;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;
+  text-align: center;
+  padding: 8% 6%;
+  background: var(--card);
+  color: var(--ink);
+  border: 1px solid rgba(58, 36, 20, 0.16);
+  box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.55);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.cardMonogram {
+  font-family: var(--font-display, serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(1.4rem, 6vw, 1.9rem);
+  color: var(--accent);
+  letter-spacing: 0.04em;
+}
+
+.cardNames {
+  font-family: var(--font-display, serif);
+  font-weight: 500;
+  font-variant: small-caps;
+  font-size: clamp(1rem, 4.4vw, 1.3rem);
+  letter-spacing: 0.03em;
+}
+
+.cardRule {
+  width: 34px;
+  height: 1px;
+  background: var(--accent);
+  opacity: 0.7;
+}
+
+.cardTagline {
+  font-family: var(--font-body, sans-serif);
+  font-weight: 300;
+  font-size: clamp(0.68rem, 2.6vw, 0.8rem);
+  letter-spacing: 0.08em;
+  opacity: 0.75;
+}
+
+.flap {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  will-change: transform;
+  /* .flapFace/.flapBack (children) carry the clip-path + texture now; this
+     box just needs to be a real 3D group so they rotate rigidly with it. */
+  transform-style: preserve-3d;
+}
+
+.flapTop {
+  transform-origin: 50% 0%;
+}
+
+.flapBottom {
+  transform-origin: 50% 100%;
+  z-index: 2;
+}
+
+/* Front paper surface — same texture asset as the envelope body, same
+   full-box background sizing/position as .back, so the grain/florals line
+   up continuously across the fold seam with zero manual offset: every
+   layer (.back, .sideFlap, .flapFace) shares an identical inset:0 box and
+   background-size:cover/position:center, so they all sample the exact same
+   region of envelope-texture.jpeg — clip-path is the only thing that
+   differs between them. */
+.flapFace {
+  position: absolute;
+  inset: 0;
+  background-color: var(--envelope);
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: multiply, normal;
+  backface-visibility: hidden;
+}
+
+.flapTop > .flapFace {
+  clip-path: polygon(0 0, 100% 0, 50% 58%);
+  background-image: linear-gradient(200deg, rgba(255, 244, 220, 0.12) 0%, rgba(20, 11, 5, 0.55) 140%), var(--envelope-texture);
+  box-shadow: inset 0 -1px 0 rgba(224, 190, 85, 0.22);
+}
+
+.flapBottom > .flapFace {
+  clip-path: polygon(0 100%, 100% 100%, 50% 42%);
+  background-image: linear-gradient(20deg, rgba(255, 244, 220, 0.06) 0%, rgba(20, 11, 5, 0.6) 140%), var(--envelope-texture);
+  box-shadow: inset 0 1px 0 rgba(224, 190, 85, 0.14);
+}
+
+/* Back of the paper — plain (unprinted stock has no embossed florals on its
+   reverse), pre-flipped 180deg so it only becomes visible once the flap's
+   live rotation carries it past 90deg, at which point .flapFace's own
+   backface-visibility:hidden has made the front disappear. Same clip-path
+   as its .flapFace sibling so the silhouette never jumps between the two. */
+.flapBack {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 100% at 50% 0%, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.62) 100%), var(--envelope-shadow);
+  backface-visibility: hidden;
+  transform: rotateX(180deg);
+}
+
+.flapTop > .flapBack {
+  clip-path: polygon(0 0, 100% 0, 50% 58%);
+}
+
+.flapBottom > .flapBack {
+  clip-path: polygon(0 100%, 100% 100%, 50% 42%);
+}
+
+/* Thin gold foil trim + diamond, marking the fold. Deliberately NOT inside
+   .flapFace's clip-path: a wax seal glued across a real fold seam straddles
+   both surfaces rather than being confined to one paper triangle, so these
+   sit unclipped, directly on the fold line (the flap's clip-path apex is at
+   58% of the envelope's height — see .flapTop > .flapFace above). They're
+   still children of .flapTop, so they rotate away with it as one rigid
+   unit, and hide past 90deg alongside .flapFace rather than showing through
+   from the back (which would look like foil printed on both sides). */
+.flapSeamLine {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  top: 58%;
+  height: 1px;
+  transform: translateY(-50%);
+  background: linear-gradient(90deg, transparent, var(--ribbon) 15%, var(--ribbon) 85%, transparent);
+  opacity: 0.55;
+  backface-visibility: hidden;
+}
+
+.flapSeamDiamond {
+  position: absolute;
+  left: 50%;
+  top: 58%;
+  width: 9px;
+  height: 9px;
+  transform: translate(-50%, -50%) rotate(45deg);
+  background: var(--ribbon);
+  opacity: 0.8;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  backface-visibility: hidden;
+}
+
+/* Nudged down onto the fold line itself (was 27% — noticeably above the
+   flap's actual crease at 58%). Sitting a couple points above the exact
+   apex, not on it: the seal graphic (seal-gold.webp) is a near-edge-to-edge
+   wax blob with almost no transparent margin, so it needs to be unclipped
+   (done above) rather than pushed all the way to a mathematical point. */
+.seal {
+  position: absolute;
+  left: 50%;
+  top: 55%;
+  width: 29%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(2px 8px 12px rgba(0, 0, 0, 0.45)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  backface-visibility: hidden;
+}
+
+.seal :global(img) {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.tapPrompt {
+  position: absolute;
+  left: 50%;
+  bottom: max(2.75rem, calc(env(safe-area-inset-bottom) + 1.75rem));
+  transform: translateX(-50%);
+  z-index: 10;
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: var(--color-text-muted, #d9c7a8);
+  font-family: var(--font-body, sans-serif);
+  font-size: clamp(0.72rem, 3vw, 0.85rem);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+  animation: pulse 2.4s ease-in-out infinite;
+}
+
+.tapPrompt:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 4px;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tapPrompt {
+    animation: none;
+  }
+}

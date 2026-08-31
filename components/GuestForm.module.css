@@ -1,0 +1,261 @@
+/* ---------------------------------------------------
+   Guest collection section — same editorial language as
+   the hero: Cormorant display, Jost body, warm gold/cream
+   on the site's dark ground. See app/globals.css :root.
+--------------------------------------------------- */
+
+.section {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: clamp(4rem, 16vw, 6rem) 1.5rem clamp(3.5rem, 12vw, 5.5rem);
+  gap: clamp(1.1rem, 4vw, 1.5rem);
+}
+
+.divider {
+  width: 56px;
+  height: 1px;
+  background: var(--color-gold-dim);
+  opacity: 0.6;
+  margin-bottom: 0.4rem;
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: clamp(0.7rem, 3vw, 0.8rem);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+}
+
+.heading {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.9rem, 8vw, 2.75rem);
+  color: var(--color-text);
+}
+
+.subtext {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: clamp(0.9rem, 3.4vw, 1.05rem);
+  line-height: 1.6;
+  color: var(--color-text-muted);
+  max-width: 32ch;
+}
+
+/* ---------------- card ---------------- */
+
+.card {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  margin-top: clamp(1.25rem, 5vw, 2rem);
+  padding: clamp(2rem, 7vw, 2.75rem) clamp(1.5rem, 6vw, 2.5rem);
+  border: 1px solid rgba(224, 190, 85, 0.22);
+  background: linear-gradient(160deg, rgba(247, 241, 228, 0.05) 0%, rgba(247, 241, 228, 0.02) 100%);
+  box-shadow: 0 24px 60px -32px rgba(0, 0, 0, 0.6);
+}
+
+/* ---------------- form ---------------- */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  text-align: left;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.label {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.input {
+  appearance: none;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(217, 199, 168, 0.32);
+  border-radius: 0;
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 1rem;
+  padding: 0.45rem 0.05rem;
+  transition: border-color 0.25s ease;
+}
+
+.input::placeholder {
+  color: rgba(217, 199, 168, 0.38);
+}
+
+.input:focus {
+  outline: none;
+  border-bottom-color: var(--color-gold);
+}
+
+.input:disabled {
+  opacity: 0.5;
+}
+
+/* ---------------- side toggle ---------------- */
+
+.sideLabel {
+  composes: label;
+}
+
+.sideToggle {
+  position: relative;
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 999px;
+  border: 1px solid rgba(224, 190, 85, 0.22);
+  background: rgba(247, 241, 228, 0.04);
+}
+
+.sideThumb {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  width: calc(50% - 4px);
+  border-radius: 999px;
+  background: linear-gradient(155deg, var(--color-gold) 0%, var(--color-gold-dim) 100%);
+  opacity: 0;
+  transform: translateX(0);
+  transition: transform 0.35s var(--ease-bounce), opacity 0.25s ease;
+}
+
+.sideToggle.isJeremy .sideThumb {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.sideToggle.isAfriyie .sideThumb {
+  opacity: 1;
+  transform: translateX(100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sideThumb {
+    transition: opacity 0.25s ease;
+  }
+}
+
+.sideOption {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  background: transparent;
+  border: none;
+  border-radius: 999px;
+  padding: 0.7rem 0.75rem;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.sideOption.isActive {
+  color: #2A1A0E;
+}
+
+.sideOption:focus-visible {
+  outline: 1px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+/* ---------------- messages ---------------- */
+
+.formError {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 0.82rem;
+  letter-spacing: 0.01em;
+  color: #E0966B;
+}
+
+.serverError {
+  composes: formError;
+}
+
+/* ---------------- submit ---------------- */
+
+.submit {
+  margin-top: 0.25rem;
+  align-self: center;
+  min-width: 200px;
+  background: linear-gradient(155deg, var(--color-gold) 0%, var(--color-gold-dim) 100%);
+  color: #2A1A0E;
+  border: none;
+  border-radius: 999px;
+  padding: 0.9rem 2rem;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.25s ease, opacity 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 12px 28px -14px rgba(224, 190, 85, 0.55);
+}
+
+.submit:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 16px 34px -14px rgba(224, 190, 85, 0.65);
+}
+
+.submit:disabled {
+  opacity: 0.65;
+  cursor: default;
+  transform: none;
+}
+
+/* ---------------- success ---------------- */
+
+.success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  text-align: center;
+  padding: 0.5rem 0;
+}
+
+.successHeading {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(1.4rem, 5vw, 1.7rem);
+  color: var(--color-gold);
+}
+
+.successText {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+  max-width: 30ch;
+}
+

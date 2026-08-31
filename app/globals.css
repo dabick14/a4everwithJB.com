@@ -282,11 +282,6 @@ a:hover {
 /* ---------------- desktop: single screen, no scroll ---------------- */
 
 @media (min-width: 768px) {
-  html, body {
-    height: 100%;
-    overflow: hidden;
-  }
-
   .screen {
     height: 100dvh;
   }
