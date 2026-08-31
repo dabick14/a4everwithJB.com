@@ -4,7 +4,7 @@ import { useState, type FormEvent } from "react";
 import styles from "./GuestForm.module.css";
 
 const GUEST_ENDPOINT = "https://us-central1-cfweddingslive.cloudfunctions.net/guests";
-const WEDDING_ID = "38a6ce2b343e5d62cb528471e37687024246c1eea93a0e42";
+const WEDDING_SLUG = "afriyie-jeremy";
 
 type Side = "jeremy" | "afriyie" | null;
 type Status = "idle" | "submitting" | "success" | "error";
@@ -81,7 +81,7 @@ export default function GuestForm() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          weddingId: WEDDING_ID,
+          weddingSlug: WEDDING_SLUG,
           name: trimmedName,
           phone: fullPhone,
           email: trimmedEmail,
