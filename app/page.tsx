@@ -15,9 +15,7 @@ export default function Home() {
 
           <h1 className="headline reveal">2nd January 2027</h1>
 
-          <p className="hashtags reveal">
-            #JBGetsAnA <span className="sep">&middot;</span> #ABaidenInHisTime
-          </p>
+          <p className="hashtags reveal">#JBGetsAnA</p>
 
           <p className="names reveal">
             Jeremy <span className="amp">&amp;</span> Afriyie

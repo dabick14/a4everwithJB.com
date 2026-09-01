@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     url: "https://a4everwithJB.com/",
     title: "Jeremy & Afriyie | Save the Date",
     description:
-      "White wedding: 2nd January 2027. Anagkazo Campus, Mampong. #JBGetsAnA #ABaidenInHisTime",
+      "White wedding: 2nd January 2027. Anagkazo Campus, Mampong. #JBGetsAnA",
     images: [
       {
         url: "https://a4everwithJB.com/assets/og-image.jpg",
